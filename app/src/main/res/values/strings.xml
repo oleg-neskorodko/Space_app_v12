@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Space_app_v1.2</string>
+    <string name="item_name">Название элемента</string>
+    <string name="image_icon_desc">Иконка элемента</string>
+
+    <string name="fragment_info_text">Это макет fragment_info.xml</string>
+    <string name="fragment_email_text">Это fragment_email.xml</string>
+    <string name="map_fragment_text">Это map_fragment.xml</string>
+
+    <string-array name="drawer_items">
+        <item>History</item>
+        <item>Info</item>
+        <item>Rockets</item>
+    </string-array>
+</resources>
