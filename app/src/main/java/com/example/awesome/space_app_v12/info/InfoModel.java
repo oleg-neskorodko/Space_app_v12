@@ -8,7 +8,7 @@ public class InfoModel {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("founder")
+/*    @SerializedName("founder")
     @Expose
     private String founder;
     @SerializedName("founded")
@@ -46,7 +46,7 @@ public class InfoModel {
     private Headquarters headquarters;
     @SerializedName("summary")
     @Expose
-    private String summary;
+    private String summary;*/
 
     public String getName() {
         return name;
@@ -56,7 +56,7 @@ public class InfoModel {
         this.name = name;
     }
 
-    public String getFounder() {
+/*    public String getFounder() {
         return founder;
     }
 
@@ -158,6 +158,6 @@ public class InfoModel {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
+    }*/
 
 }

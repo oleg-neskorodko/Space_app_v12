@@ -9,71 +9,72 @@ public class RocketsModel {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("active")
-    @Expose
-    private Boolean active;
-    @SerializedName("stages")
-    @Expose
-    private Integer stages;
-    @SerializedName("boosters")
-    @Expose
-    private Integer boosters;
-    @SerializedName("cost_per_launch")
-    @Expose
-    private Integer costPerLaunch;
-    @SerializedName("success_rate_pct")
-    @Expose
-    private Integer successRatePct;
-    @SerializedName("first_flight")
-    @Expose
-    private String firstFlight;
-    @SerializedName("country")
-    @Expose
-    private String country;
-    @SerializedName("company")
-    @Expose
-    private String company;
-    @SerializedName("height")
-    @Expose
-    private Height height;
-    @SerializedName("diameter")
-    @Expose
-    private Diameter diameter;
-    @SerializedName("mass")
-    @Expose
-    private Mass mass;
-    @SerializedName("payload_weights")
-    @Expose
-    private List<PayloadWeight> payloadWeights = null;
-    @SerializedName("first_stage")
-    @Expose
-    private FirstStage firstStage;
-    @SerializedName("second_stage")
-    @Expose
-    private SecondStage secondStage;
-    @SerializedName("engines")
-    @Expose
-    private Engines engines;
-    @SerializedName("landing_legs")
-    @Expose
-    private LandingLegs landingLegs;
-    @SerializedName("wikipedia")
-    @Expose
-    private String wikipedia;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("rocket_id")
-    @Expose
-    private String rocketId;
+      @SerializedName("active")
+      @Expose
+      private Boolean active;
+      @SerializedName("stages")
+      @Expose
+      private Integer stages;
+      @SerializedName("boosters")
+      @Expose
+      private Integer boosters;
+      @SerializedName("cost_per_launch")
+      @Expose
+      private Integer costPerLaunch;
+      @SerializedName("success_rate_pct")
+      @Expose
+      private Integer successRatePct;
+      @SerializedName("first_flight")
+      @Expose
+      private String firstFlight;
+      @SerializedName("country")
+      @Expose
+      private String country;
+      @SerializedName("company")
+      @Expose
+      private String company;
+    /*
+   @SerializedName("height")
+   @Expose
+   private Height height;
+   @SerializedName("diameter")
+   @Expose
+   private Diameter diameter;
+   @SerializedName("mass")
+   @Expose
+   private Mass mass;
+   @SerializedName("payload_weights")
+   @Expose
+   private List<PayloadWeight> payloadWeights = null;
+   @SerializedName("first_stage")
+   @Expose
+   private FirstStage firstStage;
+   @SerializedName("second_stage")
+   @Expose
+   private SecondStage secondStage;*/
+   @SerializedName("engines")
+   @Expose
+   private Engines engines;
+   @SerializedName("landing_legs")
+   @Expose
+   private LandingLegs landingLegs;
+   @SerializedName("wikipedia")
+   @Expose
+   private String wikipedia;
+   @SerializedName("description")
+   @Expose
+   private String description;
+   @SerializedName("rocket_id")
+   @Expose
+   private String rocketId;
     @SerializedName("rocket_name")
     @Expose
     private String rocketName;
-    @SerializedName("rocket_type")
+   @SerializedName("rocket_type")
     @Expose
     private String rocketType;
 
-    public Integer getId() {
+     public Integer getId() {
         return id;
     }
 
@@ -113,7 +114,7 @@ public class RocketsModel {
         this.costPerLaunch = costPerLaunch;
     }
 
-    public Integer getSuccessRatePct() {
+ /*   public Integer getSuccessRatePct() {
         return successRatePct;
     }
 
@@ -192,7 +193,7 @@ public class RocketsModel {
     public void setSecondStage(SecondStage secondStage) {
         this.secondStage = secondStage;
     }
-
+*/
     public Engines getEngines() {
         return engines;
     }
@@ -231,7 +232,7 @@ public class RocketsModel {
 
     public void setRocketId(String rocketId) {
         this.rocketId = rocketId;
-    }
+    }//
 
     public String getRocketName() {
         return rocketName;

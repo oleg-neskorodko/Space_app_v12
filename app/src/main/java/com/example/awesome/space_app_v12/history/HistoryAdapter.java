@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
+import com.example.awesome.space_app_v12.info.InfoModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,7 +61,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.tvHistoryDate.setText(sdf.format(new Date(history1.getEventDateUnix()*1000L)));
         holder.tvHistoryWiki.setText(history1.getLinks().getWikipedia());
         holder.tvHistoryDetails.setText(history1.getDetails());
-
     }
 
     public void setClickListener(View.OnClickListener callback) {

@@ -30,8 +30,8 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder
         InfoModel info1 = posts.get(position);
 
         holder.tvInfoName.setText(info1.getName());
-        holder.tvInfoFoundedValue.setText(info1.getFounded());
-        holder.tvInfoFounderValue.setText(info1.getFounder());
+        //holder.tvInfoFoundedValue.setText(info1.getFounded());
+        //holder.tvInfoFounderValue.setText(info1.getFounder());
 
     }
 

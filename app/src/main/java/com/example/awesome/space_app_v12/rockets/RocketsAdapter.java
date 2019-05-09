@@ -1,11 +1,13 @@
 package com.example.awesome.space_app_v12.rockets;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
 
 import java.util.List;
@@ -30,7 +32,8 @@ public class RocketsAdapter extends RecyclerView.Adapter<RocketsAdapter.RocketsV
         RocketsModel rockets1 = posts.get(position);
         holder.tvRocketsName.setText(rockets1.getRocketName());
         holder.tvRocketsTypeValue.setText(rockets1.getRocketType());
-        holder.tvRocketsCostValue.setText(rockets1.getCostPerLaunch());
+        Log.d(MainActivity.TAG, "here");
+        holder.tvRocketsCostValue.setText(String.valueOf(rockets1.getCostPerLaunch()));
         holder.tvRocketsWiki.setText(rockets1.getWikipedia());
 
     }

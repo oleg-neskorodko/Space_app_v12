@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
             Fragment fragment = null;
 
             // на основании выбранного элемента меню
-            // вызываем соответственный ему фрагмент
+            // вызываем соответствующий ему фрагмент
             switch (position) {
                 case 0:
                     fragment = new HistoryFragment();
