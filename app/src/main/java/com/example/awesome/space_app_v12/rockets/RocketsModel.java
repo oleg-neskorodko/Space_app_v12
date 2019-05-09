@@ -1,4 +1,4 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.rockets;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

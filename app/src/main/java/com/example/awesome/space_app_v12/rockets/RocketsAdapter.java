@@ -1,13 +1,12 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.rockets;
 
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.awesome.space_app_v12.R;
 
 import java.util.List;
 
@@ -30,7 +29,9 @@ public class RocketsAdapter extends RecyclerView.Adapter<RocketsAdapter.RocketsV
     public void onBindViewHolder(RocketsViewHolder holder, int position) {
         RocketsModel rockets1 = posts.get(position);
         holder.tvRocketsName.setText(rockets1.getRocketName());
-        holder.tvRocketsFirstFlight.setText(rockets1.getFirstFlight());
+        holder.tvRocketsTypeValue.setText(rockets1.getRocketType());
+        holder.tvRocketsCostValue.setText(rockets1.getCostPerLaunch());
+        holder.tvRocketsWiki.setText(rockets1.getWikipedia());
 
     }
 
@@ -44,12 +45,16 @@ public class RocketsAdapter extends RecyclerView.Adapter<RocketsAdapter.RocketsV
 
     class RocketsViewHolder extends RecyclerView.ViewHolder {
         TextView tvRocketsName;
-        TextView tvRocketsFirstFlight;
+        TextView tvRocketsTypeValue;
+        TextView tvRocketsCostValue;
+        TextView tvRocketsWiki;
 
         public RocketsViewHolder(View itemView) {
             super(itemView);
             tvRocketsName = (TextView) itemView.findViewById(R.id.tvRocketsName);
-            tvRocketsFirstFlight = (TextView) itemView.findViewById(R.id.tvRocketsFirstFlight);
+            tvRocketsTypeValue = (TextView) itemView.findViewById(R.id.tvRocketsTypeValue);
+            tvRocketsCostValue = (TextView) itemView.findViewById(R.id.tvRocketsCostValue);
+            tvRocketsWiki = (TextView) itemView.findViewById(R.id.tvRocketsWiki);
         }
     }
 

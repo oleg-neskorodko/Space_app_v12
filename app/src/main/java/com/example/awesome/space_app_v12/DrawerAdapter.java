@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 public class DrawerAdapter extends ArrayAdapter<ItemModel> {
 
-    Context mContext;
-    int layoutId;
-    ItemModel data[] = null;
+    private Context mContext;
+    private int layoutId;
+    private ItemModel data[] = null;
 
     public DrawerAdapter(Context mContext, int layoutId, ItemModel[] data) {
         super(mContext, layoutId, data);

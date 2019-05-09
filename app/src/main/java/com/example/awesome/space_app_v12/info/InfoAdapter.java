@@ -1,12 +1,12 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.info;
 
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.awesome.space_app_v12.R;
 
 import java.util.List;
 
@@ -30,8 +30,8 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder
         InfoModel info1 = posts.get(position);
 
         holder.tvInfoName.setText(info1.getName());
-        holder.tvInfoFounder.setText(info1.getFounder());
-        holder.tvInfoEmployees.setText(info1.getEmployees());
+        holder.tvInfoFoundedValue.setText(info1.getFounded());
+        holder.tvInfoFounderValue.setText(info1.getFounder());
 
     }
 
@@ -45,14 +45,14 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder
 
     class InfoViewHolder extends RecyclerView.ViewHolder {
         TextView tvInfoName;
-        TextView tvInfoFounder;
-        TextView tvInfoEmployees;
+        TextView tvInfoFoundedValue;
+        TextView tvInfoFounderValue;
 
         public InfoViewHolder(View itemView) {
             super(itemView);
             tvInfoName = (TextView) itemView.findViewById(R.id.tvInfoName);
-            tvInfoFounder = (TextView) itemView.findViewById(R.id.tvInfoFounder);
-            tvInfoEmployees = (TextView) itemView.findViewById(R.id.tvInfoEmployees);
+            tvInfoFoundedValue = (TextView) itemView.findViewById(R.id.tvInfoFoundedValue);
+            tvInfoFounderValue = (TextView) itemView.findViewById(R.id.tvInfoFounderValue);
         }
     }
 

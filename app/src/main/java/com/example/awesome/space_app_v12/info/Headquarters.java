@@ -1,4 +1,4 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.info;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

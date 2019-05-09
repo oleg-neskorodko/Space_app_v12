@@ -1,16 +1,17 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.info;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.awesome.space_app_v12.App;
+import com.example.awesome.space_app_v12.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ import retrofit2.Response;
 
 public class InfoFragment extends Fragment{
 
-    RecyclerView recyclerView;
-    List<InfoModel> posts;
-
-    String link = "info";
+    private RecyclerView recyclerView;
+    private List<InfoModel> posts;
+    private String link = "info";
+    private LinearLayoutManager layoutManager;
+    private InfoAdapter adapter;
 
 
     @Nullable
@@ -35,7 +37,10 @@ public class InfoFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_layout, null);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        posts = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new InfoAdapter(posts);
+        initView(view);
 
         return view;
     }
@@ -45,15 +50,7 @@ public class InfoFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        posts = new ArrayList<>();
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        InfoAdapter adapter = new InfoAdapter(posts);
-        recyclerView.setAdapter(adapter);
-
-        App.getInfo().getData(link).enqueue(new Callback<List<InfoModel>>() {
+        App.getApiService().getInfo(link).enqueue(new Callback<List<InfoModel>>() {
             @Override
             public void onResponse(Call<List<InfoModel>> call, Response<List<InfoModel>> response) {
                 posts.addAll(response.body());
@@ -68,5 +65,11 @@ public class InfoFragment extends Fragment{
                 //Toast.makeText(getActivity(), "An error occurred during networking", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initView(View rootView) {
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }

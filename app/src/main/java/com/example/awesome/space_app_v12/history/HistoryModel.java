@@ -1,5 +1,4 @@
-package com.example.awesome.space_app_v12;
-import android.util.Log;
+package com.example.awesome.space_app_v12.history;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

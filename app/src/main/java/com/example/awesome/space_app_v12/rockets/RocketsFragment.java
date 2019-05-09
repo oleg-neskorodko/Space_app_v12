@@ -1,16 +1,17 @@
-package com.example.awesome.space_app_v12;
+package com.example.awesome.space_app_v12.rockets;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.awesome.space_app_v12.App;
+import com.example.awesome.space_app_v12.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ import retrofit2.Response;
 
 public class RocketsFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    List<RocketsModel> posts;
-
-    String link = "rockets";
+    private RecyclerView recyclerView;
+    private List<RocketsModel> posts;
+    private String link = "rockets";
+    private LinearLayoutManager layoutManager;
+    private RocketsAdapter adapter;
 
     @Nullable
     @Override
@@ -34,7 +36,10 @@ public class RocketsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_layout, null);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        posts = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new RocketsAdapter(posts);
+        initView(view);
 
         return view;
     }
@@ -44,15 +49,7 @@ public class RocketsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        posts = new ArrayList<>();
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        RocketsAdapter adapter = new RocketsAdapter(posts);
-        recyclerView.setAdapter(adapter);
-
-        App.getRockets().getData(link).enqueue(new Callback<List<RocketsModel>>() {
+        App.getApiService().getRockets(link).enqueue(new Callback<List<RocketsModel>>() {
             @Override
             public void onResponse(Call<List<RocketsModel>> call, Response<List<RocketsModel>> response) {
                 posts.addAll(response.body());
@@ -67,5 +64,11 @@ public class RocketsFragment extends Fragment {
                 //Toast.makeText(getActivity(), "An error occurred during networking", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initView(View rootView) {
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }

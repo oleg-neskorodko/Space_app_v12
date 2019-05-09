@@ -9,22 +9,58 @@
         android:id="@+id/tvInfoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="text1"
+        android:text="text"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary" />
 
-    <TextView
-        android:id="@+id/tvInfoFounder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:text="text2"
-        android:textAlignment="textEnd" />
-
-    <TextView
-        android:id="@+id/tvInfoEmployees"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="text3"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvInfoFounded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="@string/founded_in"/>
+
+        <TextView
+            android:id="@+id/tvInfoFoundedValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:textColor="?android:attr/textColorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvInfoFounder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:text="@string/founder"/>
+
+        <TextView
+            android:id="@+id/tvInfoFounderValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:textColor="?android:attr/textColorPrimary" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dividerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
 </LinearLayout>

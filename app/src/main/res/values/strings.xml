@@ -6,6 +6,10 @@
     <string name="fragment_info_text">Это макет fragment_info.xml</string>
     <string name="fragment_email_text">Это fragment_email.xml</string>
     <string name="map_fragment_text">Это map_fragment.xml</string>
+    <string name="founded_in">Founded in</string>
+    <string name="cost_per_launch">Cost per launch:</string>
+    <string name="type">Type:</string>
+    <string name="founder">Founder:</string>
 
     <string-array name="drawer_items">
         <item>History</item>
