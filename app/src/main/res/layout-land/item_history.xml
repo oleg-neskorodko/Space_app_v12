@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="text"
+        android:paddingBottom="10dp"
         android:textColor="?android:attr/textColorPrimary" />
 
     <View

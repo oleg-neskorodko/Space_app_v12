@@ -1,17 +1,23 @@
 package com.example.awesome.space_app_v12.rockets;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.awesome.space_app_v12.App;
+import com.example.awesome.space_app_v12.FragmentListener;
+import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
+import com.example.awesome.space_app_v12.UrlClickListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +34,11 @@ public class RocketsFragment extends Fragment {
     private String link = "rockets";
     private LinearLayoutManager layoutManager;
     private RocketsAdapter adapter;
+    private FragmentListener listener;
+
+    public void setListener(FragmentListener listener) {
+        this.listener = listener;
+    }
 
     @Nullable
     @Override
@@ -38,9 +49,25 @@ public class RocketsFragment extends Fragment {
 
         posts = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
-        adapter = new RocketsAdapter(posts);
+        adapter = new RocketsAdapter(new UrlClickListener() {
+
+            @Override
+            public void onClickUrl(String url) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        }, posts);
         initView(view);
 
+        adapter.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = recyclerView.getChildAdapterPosition(v);
+                String text = posts.get(position).getDescription();
+                Log.d(MainActivity.TAG, "onClick");
+                listener.onDetails(text);
+            }
+        });
         return view;
     }
 
@@ -61,7 +88,6 @@ public class RocketsFragment extends Fragment {
                 if (t instanceof IOException) {
                     Toast.makeText(getActivity(), "this is an actual network failure", Toast.LENGTH_SHORT).show();
                 } else Toast.makeText(getActivity(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity(), "An error occurred during networking", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -70,5 +96,11 @@ public class RocketsFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void onStop() {
+        super.onStop();
+        posts = new ArrayList<>();
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

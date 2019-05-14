@@ -16,7 +16,7 @@ public interface ApiService {
     Call<List<HistoryModel>> getHistory(@Path("historyLink") String historyLink);
 
     @GET("/v3/{infoLink}")
-    Call<List<InfoModel>> getInfo(@Path("infoLink") String infoLink);
+    Call<InfoModel> getInfo(@Path("infoLink") String infoLink);
 
     @GET("/v3/{rocketsLink}")
     Call<List<RocketsModel>> getRockets(@Path("rocketsLink") String rocketsLink);

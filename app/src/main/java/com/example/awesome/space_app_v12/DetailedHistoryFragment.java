@@ -1,4 +1,4 @@
-package com.example.awesome.space_app_v12.history;
+package com.example.awesome.space_app_v12;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

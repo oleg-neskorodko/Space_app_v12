@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.awesome.space_app_v12.history.DetailedHistoryFragment;
 import com.example.awesome.space_app_v12.history.HistoryFragment;
 import com.example.awesome.space_app_v12.info.InfoFragment;
 import com.example.awesome.space_app_v12.rockets.RocketsFragment;
@@ -38,24 +37,33 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
 
         Log.d(TAG, "MainActivity onCreate");
 
-
-
         mTitle = getTitle();
         mItemTitles = getResources().getStringArray(R.array.drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerListView = (ListView) findViewById(R.id.left_drawer);
 
-        addFragment();
+
         setupToolbar();
-        getSupportActionBar().setTitle(mItemTitles[0]);
+        if (savedInstanceState == null) {
+            addFragment();
+            getSupportActionBar().setTitle(mItemTitles[0]);
+        } else getSupportActionBar().setTitle(savedInstanceState.getString("barTitle", mItemTitles[0]));
+
         dItems = fillDataModel();
         setDrawer();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("barTitle", getSupportActionBar().getTitle().toString());
     }
 
     public void setDrawer() {
         adapter = new DrawerAdapter(this, R.layout.item_row, dItems);
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setOnItemClickListener(new ItemClickListener());
+        Log.d(TAG, "MainActivity setDrawer");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setupDrawerToggle();
@@ -79,11 +87,14 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
 
     @Override
     public void onDetails(String str) {
+        Log.d(TAG, "onDetails main");
         detailedHistory(str);
     }
 
     // по клику на элемент списка устанавливаем нужный фрагмент в контейнер
     private class ItemClickListener implements ListView.OnItemClickListener, FragmentListener {
+
+        //
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -98,9 +109,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
                     break;
                 case 1:
                     fragment = new InfoFragment();
+                    ((InfoFragment) fragment).setListener(this);
                     break;
                 case 2:
                     fragment = new RocketsFragment();
+                    ((RocketsFragment) fragment).setListener(this);
                     break;
 
                 default:
@@ -119,12 +132,12 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
 
         @Override
         public void onDetails(String str) {
+            Log.d(TAG, "onDetails item");
             detailedHistory(str);
         }
     }
 
     public void detailedHistory(String str) {
-        Log.d(TAG, "detailedHistory start");
         Fragment fragment = new DetailedHistoryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("key", str);

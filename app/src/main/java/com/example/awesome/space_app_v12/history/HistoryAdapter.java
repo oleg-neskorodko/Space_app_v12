@@ -1,8 +1,6 @@
 package com.example.awesome.space_app_v12.history;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
-import com.example.awesome.space_app_v12.info.InfoModel;
+import com.example.awesome.space_app_v12.UrlClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,12 +24,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private SimpleDateFormat sdf;
     private View.OnClickListener mClickListener;
 
-    public HistoryAdapter(List<HistoryModel> posts) {
+    private UrlClickListener listener;
+
+    public HistoryAdapter(UrlClickListener listener, List<HistoryModel> posts) {
+        this.listener = listener;
         this.posts = posts;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(MainActivity.TAG, "onCreateViewHolder");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history,
                 parent, false);
 
@@ -46,20 +48,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        //Log.d(MainActivity.TAG, "onBindViewHolder");
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        Log.d(MainActivity.TAG, "onBindViewHolder");
 
         HistoryModel history1 = posts.get(position);
         sdf = new SimpleDateFormat("dd.MM.yyyy");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.tvHistoryTitle.setText(Html.fromHtml(history1.getTitle(),
-                    Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            holder.tvHistoryTitle.setText(Html.fromHtml(history1.getTitle()));
-        }
-        holder.tvHistoryID.setText(history1.getId().toString());
+        holder.tvHistoryTitle.setText(history1.getTitle());
+        holder.tvHistoryID.setText(String.valueOf(history1.getId()));
         holder.tvHistoryDate.setText(sdf.format(new Date(history1.getEventDateUnix()*1000L)));
         holder.tvHistoryWiki.setText(history1.getLinks().getWikipedia());
+        holder.tvHistoryWiki.setTextColor(Color.BLUE);
+        holder.tvHistoryWiki.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClickUrl(holder.tvHistoryWiki.getText().toString());
+            }
+        });
         holder.tvHistoryDetails.setText(history1.getDetails());
     }
 
@@ -74,9 +78,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return posts.size();
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
 
         TextView tvHistoryID;
         TextView tvHistoryTitle;
@@ -92,9 +94,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             tvHistoryWiki = (TextView) itemView.findViewById(R.id.tvHistoryWiki);
             tvHistoryDetails = (TextView) itemView.findViewById(R.id.tvHistoryDetails);
         }
-
-
     }
-
 }
 

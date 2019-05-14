@@ -8,12 +8,13 @@ public class InfoModel {
     @SerializedName("name")
     @Expose
     private String name;
-/*    @SerializedName("founder")
+    @SerializedName("founder")
     @Expose
     private String founder;
     @SerializedName("founded")
     @Expose
     private Integer founded;
+    /*
     @SerializedName("employees")
     @Expose
     private Integer employees;
@@ -43,10 +44,10 @@ public class InfoModel {
     private Integer valuation;
     @SerializedName("headquarters")
     @Expose
-    private Headquarters headquarters;
+    private Headquarters headquarters;*/
     @SerializedName("summary")
     @Expose
-    private String summary;*/
+    private String summary;
 
     public String getName() {
         return name;
@@ -56,7 +57,7 @@ public class InfoModel {
         this.name = name;
     }
 
-/*    public String getFounder() {
+    public String getFounder() {
         return founder;
     }
 
@@ -72,7 +73,7 @@ public class InfoModel {
         this.founded = founded;
     }
 
-    public Integer getEmployees() {
+ /*   public Integer getEmployees() {
         return employees;
     }
 
@@ -151,13 +152,50 @@ public class InfoModel {
     public void setHeadquarters(Headquarters headquarters) {
         this.headquarters = headquarters;
     }
-
+*/
     public String getSummary() {
         return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }*/
+    }
+
+    public class Headquarters {
+
+        @SerializedName("address")
+        @Expose
+        private String address;
+        @SerializedName("city")
+        @Expose
+        private String city;
+        @SerializedName("state")
+        @Expose
+        private String state;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+    }
 
 }

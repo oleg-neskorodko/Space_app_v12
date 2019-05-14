@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.awesome.space_app_v12.App;
+import com.example.awesome.space_app_v12.FragmentListener;
+import com.example.awesome.space_app_v12.Logger;
 import com.example.awesome.space_app_v12.R;
 
 import java.io.IOException;
@@ -21,15 +23,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InfoFragment extends Fragment{
+public class InfoFragment extends Fragment {
 
+    private static final String TAG = InfoFragment.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<InfoModel> posts;
     private String link = "info";
     private LinearLayoutManager layoutManager;
     private InfoAdapter adapter;
 
-
+    private FragmentListener listener;
+    public void setListener(FragmentListener listener) {
+        this.listener = listener;
+    }
 
     @Nullable
     @Override
@@ -43,6 +49,15 @@ public class InfoFragment extends Fragment{
         adapter = new InfoAdapter(posts);
         initView(view);
 
+        adapter.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = recyclerView.getChildAdapterPosition(v);
+                String text = posts.get(position).getSummary();
+                listener.onDetails(text);
+            }
+        });
+
         return view;
     }
 
@@ -51,19 +66,22 @@ public class InfoFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        App.getApiService().getInfo(link).enqueue(new Callback<List<InfoModel>>() {
+        App.getApiService().getInfo(link).enqueue(new Callback<InfoModel>() {
             @Override
-            public void onResponse(Call<List<InfoModel>> call, Response<List<InfoModel>> response) {
-                posts.addAll(response.body());
+            public void onResponse(Call<InfoModel> call, Response<InfoModel> response) {
+                posts.add(response.body());
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
+
             @Override
-            public void onFailure(Call<List<InfoModel>> call, Throwable t) {
+            public void onFailure(Call<InfoModel> call, Throwable t) {
+                Logger.error(TAG, "onResume", t);
+
                 //Произошла ошибка
                 if (t instanceof IOException) {
                     Toast.makeText(getActivity(), "this is an actual network failure", Toast.LENGTH_SHORT).show();
-                } else Toast.makeText(getActivity(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity(), "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getActivity(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
             }
         });
     }

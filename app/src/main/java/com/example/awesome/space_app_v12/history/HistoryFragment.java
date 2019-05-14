@@ -1,5 +1,7 @@
 package com.example.awesome.space_app_v12.history;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import com.example.awesome.space_app_v12.App;
 import com.example.awesome.space_app_v12.FragmentListener;
 import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
+import com.example.awesome.space_app_v12.UrlClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +33,11 @@ public class HistoryFragment extends Fragment {
     private String link = "history";
     private LinearLayoutManager layoutManager;
     private HistoryAdapter adapter;
-
     private FragmentListener listener;
 
     public void setListener(FragmentListener listener) {
         this.listener = listener;
     }
-
 
     @Nullable
     @Override
@@ -44,18 +45,23 @@ public class HistoryFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(MainActivity.TAG, "onCreateView");
 
-
         View view = inflater.inflate(R.layout.fragment_layout, null);
         posts = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
-        adapter = new HistoryAdapter(posts);
+        adapter = new HistoryAdapter(new UrlClickListener() {
+            @Override
+            public void onClickUrl(String url) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        }
+                , posts);
         initView(view);
 
         adapter.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int position = recyclerView.indexOfChild(v);
+                int position = recyclerView.getChildAdapterPosition(v);
                 Log.d(MainActivity.TAG, "position = " + position);
                 String text = posts.get(position).getDetails();
                 Log.d(MainActivity.TAG, "text = " + text);
@@ -64,8 +70,6 @@ public class HistoryFragment extends Fragment {
         });
         return view;
     }
-
-
 
     @Override
     public void onResume() {
@@ -90,5 +94,12 @@ public class HistoryFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        posts = new ArrayList<>();
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }
