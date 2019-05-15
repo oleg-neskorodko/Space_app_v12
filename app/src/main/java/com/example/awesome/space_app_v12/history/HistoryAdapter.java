@@ -1,16 +1,12 @@
 package com.example.awesome.space_app_v12.history;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
 import com.example.awesome.space_app_v12.UrlClickListener;
 
@@ -33,7 +29,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(MainActivity.TAG, "onCreateViewHolder");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history,
                 parent, false);
 
@@ -49,8 +44,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Log.d(MainActivity.TAG, "onBindViewHolder");
-
         HistoryModel history1 = posts.get(position);
         sdf = new SimpleDateFormat("dd.MM.yyyy");
         holder.tvHistoryTitle.setText(history1.getTitle());

@@ -1,11 +1,12 @@
 package com.example.awesome.space_app_v12;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
     private ItemModel[] dItems;
     private DrawerAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,24 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
         if (savedInstanceState == null) {
             addFragment();
             getSupportActionBar().setTitle(mItemTitles[0]);
-        } else getSupportActionBar().setTitle(savedInstanceState.getString("barTitle", mItemTitles[0]));
+        } else {
+            getSupportActionBar().setTitle(savedInstanceState.getString("barTitle", mItemTitles[0]));
+            RocketsFragment fRockets = (RocketsFragment) getSupportFragmentManager().findFragmentByTag("rockets");
+            if (fRockets != null) {
+                Log.d(TAG, "test rockets OK");
+                fRockets.setListener(this);
+            }
+            InfoFragment fInfo = (InfoFragment) getSupportFragmentManager().findFragmentByTag("info");
+            if (fInfo != null) {
+                Log.d(TAG, "test info OK");
+                fInfo.setListener(this);
+            }
+            HistoryFragment fHistory = (HistoryFragment) getSupportFragmentManager().findFragmentByTag("history");
+            if (fHistory != null) {
+                Log.d(TAG, "test history OK");
+                fHistory.setListener(this);
+            }
+        }
 
         dItems = fillDataModel();
         setDrawer();
@@ -62,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
     public void setDrawer() {
         adapter = new DrawerAdapter(this, R.layout.item_row, dItems);
         mDrawerListView.setAdapter(adapter);
-        mDrawerListView.setOnItemClickListener(new ItemClickListener());
-        Log.d(TAG, "MainActivity setDrawer");
+        mDrawerListView.setOnItemClickListener(new ItemClickListener(this));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setupDrawerToggle();
@@ -94,11 +112,15 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
     // по клику на элемент списка устанавливаем нужный фрагмент в контейнер
     private class ItemClickListener implements ListView.OnItemClickListener, FragmentListener {
 
-        //
+        private Context context;
+        public ItemClickListener(Context context) {
+            this.context = context;
+        }
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Fragment fragment = null;
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
             // на основании выбранного элемента меню
             // вызываем соответствующий ему фрагмент
@@ -106,23 +128,23 @@ public class MainActivity extends AppCompatActivity implements FragmentListener{
                 case 0:
                     fragment = new HistoryFragment();
                     ((HistoryFragment) fragment).setListener(this);
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, "history").addToBackStack("mainStack").commit();
                     break;
                 case 1:
                     fragment = new InfoFragment();
                     ((InfoFragment) fragment).setListener(this);
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, "info").addToBackStack("mainStack").commit();
                     break;
                 case 2:
                     fragment = new RocketsFragment();
                     ((RocketsFragment) fragment).setListener(this);
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, "rockets").addToBackStack("mainStack").commit();
                     break;
 
                 default:
                     break;
             }
             if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("mainStack").commit();
-
                 mDrawerListView.setItemChecked(position, true);
                 mDrawerListView.setSelection(position);
                 setTitle(mItemTitles[position]);

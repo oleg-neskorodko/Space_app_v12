@@ -2,13 +2,11 @@ package com.example.awesome.space_app_v12.rockets;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.awesome.space_app_v12.MainActivity;
 import com.example.awesome.space_app_v12.R;
 import com.example.awesome.space_app_v12.UrlClickListener;
 

@@ -45,6 +45,8 @@ public class RocketsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        if (savedInstanceState != null) Log.d(MainActivity.TAG, "Fragment1 savedInstanceState not empty");
+
         View view = inflater.inflate(R.layout.fragment_layout, null);
 
         posts = new ArrayList<>();
@@ -70,7 +72,6 @@ public class RocketsFragment extends Fragment {
         });
         return view;
     }
-
 
     @Override
     public void onResume() {
